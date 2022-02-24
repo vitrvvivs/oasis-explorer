@@ -72,14 +72,18 @@ func NewParser(ctx context.Context, cfg conf.Scanner, d dao.ParserDAO) (*Parser,
 		bAPI:      bAPI,
 		dao:       d,
 		baseEpoch: baseEpoch,
-		container: &ParseContainer{
-			blocks:          container.NewBlocksContainer(),
-			blockSignatures: container.NewBlockSignatureContainer(),
-			txs:             container.NewTxsContainer(),
-			balances:        container.NewAccountsContainer(),
-			rewards:         container.NewRewardsContainer(),
-		},
+		container: NewParseContainer(),
 	}, nil
+}
+
+func NewParseContainer() *ParseContainer {
+	return &ParseContainer{
+		blocks:          container.NewBlocksContainer(),
+		blockSignatures: container.NewBlockSignatureContainer(),
+		txs:             container.NewTxsContainer(),
+		balances:        container.NewAccountsContainer(),
+		rewards:         container.NewRewardsContainer(),
+	}
 }
 
 func (p *Parser) GetTaskExecutor(taskTitle string) (executor *smodels.Executor, err error) {
