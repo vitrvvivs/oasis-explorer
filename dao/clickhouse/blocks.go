@@ -22,7 +22,7 @@ func (cl Clickhouse) CreateBlocks(blocks []dmodels.Block) (err error) {
 	}
 	stmt, err := tx.Prepare(
 		fmt.Sprintf("INSERT INTO %s (blk_lvl, blk_created_at, blk_hash, blk_proposer_address, blk_validator_hash, blk_epoch)"+
-			"VALUES (?, ?, ?, ?, ?, ?)", dmodels.BlocksTable))
+			" VALUES (?, ?, ?, ?, ?, ?)", dmodels.BlocksTable))
 	if err != nil {
 		return err
 	}
@@ -65,7 +65,7 @@ func (cl Clickhouse) CreateBlockSignatures(blocks []dmodels.BlockSignature) erro
 	}
 	stmt, err := tx.Prepare(
 		fmt.Sprintf("INSERT INTO %s (blk_lvl, sig_timestamp, sig_block_id_flag, sig_validator_address, sig_blk_signature)"+
-			"VALUES (?, ?, ?, ?, ?)", dmodels.BlockSignaturesTable))
+			" VALUES (?, ?, ?, ?, ?)", dmodels.BlockSignaturesTable))
 	if err != nil {
 		return err
 	}
