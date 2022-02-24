@@ -3,7 +3,7 @@ package scanners
 import (
 	"context"
 	"fmt"
-	"log"
+	"oasisTracker/common/log"
 	"oasisTracker/conf"
 	"oasisTracker/dao"
 	"oasisTracker/smodels"
@@ -116,7 +116,7 @@ func (p *Parser) Truncate() {
 }
 
 func (p *Parser) Save() (err error) {
-	log.Print("Start saving")
+	//log.Print("Start saving")
 	if !p.container.blocks.IsEmpty() {
 		tm := time.Now()
 		err := p.dao.CreateBlocks(p.container.blocks.Blocks())
@@ -124,7 +124,7 @@ func (p *Parser) Save() (err error) {
 			return fmt.Errorf("dao.CreateBlocks: %s", err.Error())
 		}
 
-		log.Print("Save time Blocks: ", time.Since(tm))
+		log.Debug("Save time Blocks: " + time.Since(tm).String())
 	}
 
 	if !p.container.blockSignatures.IsEmpty() {
@@ -133,7 +133,7 @@ func (p *Parser) Save() (err error) {
 		if err != nil {
 			return fmt.Errorf("dao.CreateBlockSignatures: %s", err.Error())
 		}
-		log.Print("Save time Signatures: ", time.Since(tm))
+		log.Debug("Save time Signatures: " + time.Since(tm).String())
 	}
 
 	if !p.container.txs.IsEmpty() {
@@ -143,7 +143,7 @@ func (p *Parser) Save() (err error) {
 			return fmt.Errorf("dao.CreateTransfers: %s", err.Error())
 		}
 
-		log.Print("Save time Transfers: ", time.Since(tm))
+		log.Debug("Save time Transfers: " + time.Since(tm).String())
 
 		err = p.dao.CreateRegisterNodeTransactions(p.container.txs.NodeRegistryTxs())
 		if err != nil {
@@ -163,7 +163,7 @@ func (p *Parser) Save() (err error) {
 			return fmt.Errorf("dao.CreateAccountBalances: %s", err.Error())
 		}
 
-		log.Print("Save time Balances: ", time.Since(tm))
+		log.Debug("Save time Balances: " + time.Since(tm).String())
 	}
 
 	if !p.container.rewards.IsEmpty() {
@@ -173,7 +173,7 @@ func (p *Parser) Save() (err error) {
 			return fmt.Errorf("dao.CreateRewards: %s", err.Error())
 		}
 
-		log.Print("Save time Rewards: ", time.Since(tm))
+		log.Debug("Save time Rewards: " + time.Since(tm).String())
 	}
 
 	return nil
